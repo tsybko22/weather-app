@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -32,16 +32,22 @@ h6 {
 
 :root {
   --main-light: #ffffff;
-  --primary-light: #eeeeee;
-  --accent-light: #cccccc;
-  --secondary-light: #dddddd;
+  --main-dark: #000000;
+  --primary-dark: #222831;
+  --secondary-dark: #272e37;
 
-  --primary-dark: #333333;
-  --secondary-dark: #444444;
+  --gradient-bg: linear-gradient(
+    152deg,
+    rgba(136, 235, 239, 0.9) -0.04%,
+    rgba(83, 91, 230, 0.9) 100%
+  );
 
-  --accent-red: #eb8383;
+  --box-shadow: 1px 2px 4px 0px #222831;
+  --border-sm: 0.8rem;
+  --border-md: 1.2rem;
+  --border-xl: 1.8rem;
 
-  --font-family: 'Poppins', sans-serif;
+  --font-family: 'Montserrat', sans-serif;
 
   --transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -52,6 +58,6 @@ body {
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
+  background-color: var(--primary-dark);
+  color: var(--main-light);
 }
