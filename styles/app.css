@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 *,
 *::before,
@@ -31,11 +31,12 @@ h6 {
 }
 
 :root {
+  --main-bg: #343d4b;
   --main-light: #ffffff;
+  --primary-light: #6c7d97;
   --main-dark: #000000;
   --primary-dark: #222831;
   --secondary-dark: #272e37;
-
   --gradient-bg: linear-gradient(
     152deg,
     rgba(136, 235, 239, 0.9) -0.04%,
@@ -56,8 +57,186 @@ body {
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--primary-dark);
+  background-color: var(--main-bg);
   color: var(--main-light);
+}
+
+.icon {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  fill: white;
+}
+
+.weather-app {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 35rem;
+  min-width: 25rem;
+  padding: 2.5rem 2rem;
+  margin-left: -2rem;
+  border-radius: var(--border-xl);
+  background: var(--gradient-bg);
+}
+
+.weather-info__top,
+.weather-info__bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-info__day {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.weather-info__date {
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.weather-info__location {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.weather-info__location svg {
+  margin-right: 0.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.weather-info__condition {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.weather-info__temp {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.forecast {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 30rem;
+  min-width: 30rem;
+  padding: 2rem 2.5rem;
+  background-color: var(--primary-dark);
+  border-top-right-radius: var(--border-md);
+  border-bottom-right-radius: var(--border-md);
+}
+
+.forecast__precipitation,
+.forecast__humidity,
+.forecast__wind {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.forecast__wind {
+  margin-bottom: 2rem;
+}
+
+.forecast__precipitation span,
+.forecast__humidity span,
+.forecast__wind span {
+  text-transform: lowercase;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.forecast-daily {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0;
+  list-style-type: none;
+  border-radius: var(--border-sm);
+  overflow: hidden;
+}
+
+.forecast-daily__day-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.8rem;
+  gap: 0.8rem;
+  background-color: var(--secondary-dark);
+  border: none;
+  color: var(--main-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.forecast-daily__day-btn:hover {
+  background-color: var(--main-bg);
+}
+
+.forecast-daily__day-btn--active {
+  color: var(--main-dark);
+  background-color: var(--main-light);
+}
+.forecast-daily__day-btn--active:hover {
+  background-color: var(--main-light);
+}
+.forecast-daily__day-btn--active .forecast-daily__icon {
+  fill: var(--main-dark);
+}
+
+.forecast-daily__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.forecast-daily__day {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.forecast-daily__temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.forecast-daily__form {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.forecast-daily__input {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 4rem;
+  border-radius: var(--border-sm);
+  background-color: var(--main-bg);
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--main-light);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M13.3333 2.66667C11.6358 2.66691 9.96286 3.07229 8.45352 3.84912C6.94418 4.62595 5.64204 5.75179 4.65531 7.13307C3.66859 8.51436 3.02578 10.1112 2.7803 11.7909C2.53483 13.4706 2.69379 15.1846 3.24397 16.7905C3.79414 18.3963 4.71964 19.8477 5.94355 21.024C7.16747 22.2003 8.65444 23.0675 10.2809 23.5535C11.9074 24.0395 13.6263 24.1303 15.2949 23.8184C16.9636 23.5064 18.5336 22.8008 19.8747 21.76L27.0573 28.9427C27.3088 29.1855 27.6456 29.3199 27.9952 29.3169C28.3448 29.3139 28.6792 29.1736 28.9264 28.9264C29.1736 28.6792 29.3139 28.3448 29.3169 27.9952C29.3199 27.6456 29.1855 27.3088 28.9427 27.0573L21.76 19.8747C22.9841 18.2979 23.7413 16.4094 23.9453 14.4237C24.1494 12.438 23.7921 10.4349 22.9142 8.6422C22.0363 6.84947 20.673 5.33905 18.9793 4.2827C17.2856 3.22634 15.3295 2.66644 13.3333 2.66667ZM5.33333 13.3333C5.33333 11.2116 6.17619 9.17677 7.67648 7.67648C9.17677 6.17619 11.2116 5.33333 13.3333 5.33333C15.4551 5.33333 17.4899 6.17619 18.9902 7.67648C20.4905 9.17677 21.3333 11.2116 21.3333 13.3333C21.3333 15.4551 20.4905 17.4899 18.9902 18.9902C17.4899 20.4905 15.4551 21.3333 13.3333 21.3333C11.2116 21.3333 9.17677 20.4905 7.67648 18.9902C6.17619 17.4899 5.33333 15.4551 5.33333 13.3333Z' fill='%236c7d97'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: 1rem;
+}
+
+.forecast-daily__input::placeholder {
+  color: var(--primary-light);
 }
