@@ -168,11 +168,11 @@ body {
 .forecast-daily {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
   padding: 0;
   list-style-type: none;
   border-radius: var(--border-sm);
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .forecast-daily__day-btn {
@@ -194,6 +194,7 @@ body {
 .forecast-daily__day-btn--active {
   color: var(--main-dark);
   background-color: var(--main-light);
+  cursor: default;
 }
 .forecast-daily__day-btn--active:hover {
   background-color: var(--main-light);
