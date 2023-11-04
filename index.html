@@ -19,23 +19,8 @@
   <body>
     <div class="weather-app">
       <div class="weather-info">
-        <div class="weather-info__top">
-          <span class="weather-info__day">Tuesday</span>
-          <span class="weather-info__date">20 Jun 2022</span>
-          <span class="weather-info__location">
-            <svg class="weather-info__icon icon">
-              <use xlink:href="#location"></use>
-            </svg>
-            Kyiv, Ukraine
-          </span>
-        </div>
-        <div class="weather-info__bottom">
-          <svg class="weather-info__icon icon">
-            <use xlink:href="#sun"></use>
-          </svg>
-          <span class="weather-info__temp">29 °C</span>
-          <span class="weather-info__condition">Sunny</span>
-        </div>
+        <div class="weather-info__top"></div>
+        <div class="weather-info__bottom"></div>
       </div>
       <div class="forecast">
         <p class="forecast__precipitation">Precipitation<span>0%</span></p>
@@ -79,7 +64,10 @@
             </button>
           </li>
         </ul>
-        <form class="forecast-daily__form">
+        <form
+          class="forecast-daily__form"
+          autocomplete="off"
+        >
           <input
             class="forecast-daily__input"
             type="text"
