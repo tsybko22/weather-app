@@ -25,7 +25,7 @@ const getWeekdayByDate = (date) => {
 
 const getForecastByLocation = async (location) => {
   try {
-    const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=5&aqi=no&alerts=no`;
+    const API_URL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=5&aqi=no&alerts=no`;
 
     const res = await fetch(API_URL, { mode: 'cors' });
     if (!res.ok) {
