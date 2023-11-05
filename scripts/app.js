@@ -19,11 +19,15 @@ const getCurrentDate = () => {
   return date;
 };
 
+const getWeekdayByDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
+};
+
 const getForecastByLocation = async (location) => {
   try {
-    const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=4&aqi=no&alerts=no`;
+    const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=5&aqi=no&alerts=no`;
 
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, { mode: 'cors' });
     if (!res.ok) {
       const message = `An error has occurred: ${res.statusText}`;
       throw new Error(message);
@@ -56,9 +60,6 @@ const createWeatherIcon = (className, code) => {
 };
 
 const updateCurrentWeatherUI = ({ current, location }) => {
-  const weatherInfoTopElem = weatherInfoElem.querySelector('.weather-info__top');
-  const weatherInfoBottomElem = weatherInfoElem.querySelector('.weather-info__bottom');
-
   const weatherInfoTopHTML = `
     <span class="weather-info__day">${getCurrentDate().currentWeekday}</span>
     <span class="weather-info__date">${getCurrentDate().currentDate}</span>
@@ -75,47 +76,51 @@ const updateCurrentWeatherUI = ({ current, location }) => {
     <span class="weather-info__temp">${Math.round(current.temp_c)} °C</span>
     <span class="weather-info__condition">${current.condition.text}</span>
   `;
-
-  weatherInfoTopElem.innerHTML = weatherInfoTopHTML;
-  weatherInfoBottomElem.innerHTML = weatherInfoBottomHTML;
+  weatherInfoElem.querySelector('.weather-info__top').innerHTML = weatherInfoTopHTML;
+  weatherInfoElem.querySelector('.weather-info__bottom').innerHTML =
+    weatherInfoBottomHTML;
 };
 
-const createForecast = (forecast, isCurrentDay) => {
+const createForecast = (forecast) => {
   const liElem = document.createElement('li');
   liElem.className = 'forecast-daily__item';
   const forecastItemHTML = `
-    <button class="forecast-daily__day-btn ${
-      isCurrentDay ? 'forecast-daily__day-btn--active' : ''
-    }">
       ${createWeatherIcon('forecast-daily__icon', forecast.day.condition.code)}
-      <span class="forecast-daily__day">Tue</span>
+      <span class="forecast-daily__day">${getWeekdayByDate(forecast.date)}</span>
       <span class="forecast-daily__temp">${Math.round(forecast.day.maxtemp_c)} °C</span>
-    </button>
   `;
   liElem.innerHTML = forecastItemHTML;
 
   forecastDailyList.appendChild(liElem);
 };
 
-const updateForecastUI = ({ forecastday }, index = 0) => {
-  const precipitation = forecastday[index].day.daily_chance_of_rain;
-  const avgHumidity = forecastday[index].day.avghumidity;
-  const avgWind = Math.round(
-    (forecastday[index].day.maxwind_mph + forecastday[0].day.maxwind_mph) / 2
-  );
+const updateForecastUI = ({ forecastday }) => {
+  const precipitation = forecastday[0].day.daily_chance_of_rain;
+  const avgHumidity = forecastday[0].day.avghumidity;
+  const maxWind = Math.round(forecastday[0].day.maxwind_kph);
 
   const forecastInfoHTML = `
     <p class="forecast__precipitation">Precipitation<span>${precipitation} %</span></p>
     <p class="forecast__humidity">Humidity<span>${avgHumidity}%</span></p>
-    <p class="forecast__wind">Wind<span>${avgWind} km/h</span></p>
+    <p class="forecast__wind">Wind<span>${maxWind} km/h</span></p>
   `;
   forecastInfoElem.innerHTML = '';
   forecastInfoElem.innerHTML = forecastInfoHTML;
 
   forecastDailyList.innerHTML = '';
-  forecastday.forEach((day, index) => {
-    createForecast(day, index === 0);
-  });
+  for (let i = 1; i < forecastday.length; i++) {
+    createForecast(forecastday[i], i);
+  }
+};
+
+const initializeWeatherData = async (location) => {
+  try {
+    const data = await getForecastByLocation(location);
+    updateCurrentWeatherUI(data);
+    updateForecastUI(data.forecast);
+  } catch (err) {
+    alert(err.message);
+  }
 };
 
 forecastLocationForm.addEventListener('submit', (evt) => {
@@ -127,18 +132,13 @@ forecastLocationForm.addEventListener('submit', (evt) => {
     return;
   }
 
-  getForecastByLocation(inputValue).then((data) => {
-    updateCurrentWeatherUI(data);
-    updateForecastUI(data.forecast);
-  });
+  initializeWeatherData(inputValue);
+
+  localStorage.setItem('location', inputValue);
 
   forecastLocationForm.reset();
 });
 
-// Initial location
-getForecastByLocation('Kyiv').then((data) => {
-  updateCurrentWeatherUI(data);
-  updateForecastUI(data.forecast);
-});
-
-//TODO: add feature to click on forecast days and add feature to persist location in localStorage
+// Upload persisted location
+const persistedLocation = localStorage.getItem('location') || 'Kyiv';
+initializeWeatherData(persistedLocation);

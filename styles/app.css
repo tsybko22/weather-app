@@ -175,7 +175,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.forecast-daily__day-btn {
+.forecast-daily__item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,23 +184,6 @@ body {
   background-color: var(--secondary-dark);
   border: none;
   color: var(--main-light);
-  cursor: pointer;
-  transition: var(--transition);
-}
-.forecast-daily__day-btn:hover {
-  background-color: var(--main-bg);
-}
-
-.forecast-daily__day-btn--active {
-  color: var(--main-dark);
-  background-color: var(--main-light);
-  cursor: default;
-}
-.forecast-daily__day-btn--active:hover {
-  background-color: var(--main-light);
-}
-.forecast-daily__day-btn--active .forecast-daily__icon {
-  fill: var(--main-dark);
 }
 
 .forecast-daily__icon {
