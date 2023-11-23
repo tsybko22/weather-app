@@ -108,7 +108,7 @@ const updateForecastUI = ({ forecastday }) => {
   forecastInfoElem.innerHTML = forecastInfoHTML;
 
   forecastDailyList.innerHTML = '';
-  for (let i = 1; i < forecastday.length; i++) {
+  for (let i = 0; i < forecastday.length; i++) {
     createForecast(forecastday[i], i);
   }
 };
@@ -116,6 +116,7 @@ const updateForecastUI = ({ forecastday }) => {
 const initializeWeatherData = async (location) => {
   try {
     const data = await getForecastByLocation(location);
+    console.log('🚀 => file: app.js:119 => initializeWeatherData => data\n', data);
     updateCurrentWeatherUI(data);
     updateForecastUI(data.forecast);
   } catch (err) {
